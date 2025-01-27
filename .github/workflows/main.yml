@@ -25,7 +25,7 @@ jobs:
                 cd Frontend
                 ls
                 git pull
-                nmp i
+                npm i
                 npm run build 
                 pm2 restart 0
             # Commands to run on your remote server
