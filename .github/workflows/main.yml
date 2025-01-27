@@ -1,0 +1,29 @@
+name: Deploy to Server via SSH
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Run the job on an Ubuntu runner
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2  # Checkout your repository's code
+
+      - name: Set up SSH private key
+        uses: appleboy/ssh-action@v0.1.0  # Use Appleboy's SSH Action
+        with:
+          host: ${{ secrets.HOST }}  # Server's IP address or hostname
+          username: ${{ secrets.USERNAME }}  # SSH username (e.g., ubuntu for AWS EC2)
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # The private SSH key secret
+          port: 22  # SSH port (default is 22)
+          script: |
+            # Commands to run on your remote server
+            cd /path/to/your/project  # Navigate to your project directory
+            git pull origin main  # Pull the latest changes from GitHub
+            npm install  # Install project dependencies
+            npm run build  # Build your project (or your custom build script)
+            sudo systemctl restart nginx  # Restart nginx or other services
