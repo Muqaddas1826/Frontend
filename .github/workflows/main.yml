@@ -3,7 +3,7 @@ name: Deploy to Server via SSH
 on:
   push:
     branches:
-      - main  # Trigger this workflow on push to the main branch
+      - master  # Trigger this workflow on push to the main branch
 
 jobs:
   deploy:
@@ -21,9 +21,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}  # The private SSH key secret
           port: 22  # SSH port (default is 22)
           script: |
+                ls
             # Commands to run on your remote server
-            cd /path/to/your/project  # Navigate to your project directory
-            git pull origin main  # Pull the latest changes from GitHub
-            npm install  # Install project dependencies
-            npm run build  # Build your project (or your custom build script)
-            sudo systemctl restart nginx  # Restart nginx or other services
+            #cd /path/to/your/project  # Navigate to your project directory
+            #git pull origin main  # Pull the latest changes from GitHub
+            #npm install  # Install project dependencies
+            #npm run build  # Build your project (or your custom build script)
+            #sudo systemctl restart nginx  # Restart nginx or other services
