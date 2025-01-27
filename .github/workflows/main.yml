@@ -27,7 +27,7 @@ jobs:
                 git pull
                 nmp i
                 npm run build 
-                pm2 restart
+                pm2 restart 0
             # Commands to run on your remote server
             #cd /path/to/your/project  # Navigate to your project directory
             #git pull origin main  # Pull the latest changes from GitHub
