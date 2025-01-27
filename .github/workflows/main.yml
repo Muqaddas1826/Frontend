@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest  # Run the job on an Ubuntu runner
 
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2  # Checkout your repository's code
+      # - name: Checkout the code
+      #   uses: actions/checkout@v2  # Checkout your repository's code
 
       - name: Set up SSH private key
-        uses: appleboy/ssh-action@v0.1.0  # Use Appleboy's SSH Action
+        uses: appleboy/ssh-action@master  # Use Appleboy's SSH Action
         with:
           host: ${{ secrets.HOST }}  # Server's IP address or hostname
           username: ${{ secrets.USERNAME }}  # SSH username (e.g., ubuntu for AWS EC2)
