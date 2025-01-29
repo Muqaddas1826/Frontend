@@ -7,27 +7,40 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Run the job on an Ubuntu runner
+    runs-on:  self-hosted  # Run the job on an Ubuntu runner
 
-    steps:
+    #steps:
       # - name: Checkout the code
       #   uses: actions/checkout@v2  # Checkout your repository's code
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout your repository's code
 
-      - name: Set up SSH private key
-        uses: appleboy/ssh-action@master  # Use Appleboy's SSH Action
-        with:
-          host: ${{ secrets.HOST }}  # Server's IP address or hostname
-          username: ${{ secrets.USERNAME }}  # SSH username (e.g., ubuntu for AWS EC2)
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # The private SSH key secret
-          port: 22  # SSH port (default is 22)
-          script: |
-                ls
-                cd Frontend
-                ls
-                git pull
-                npm i
-                npm run build 
-                pm2 restart 0
+      - name: Install dependencies
+        run: npm install  # Install Node.js dependencies
+
+      - name: Build project
+        run: npm run build  # Build the project
+
+      - name: Restart with PM2
+        run: pm2 restart 0  # Restart your app with PM2 (adjust if needed)
+        
+
+      # - name: Set up SSH private key
+      #   uses: appleboy/ssh-action@master  # Use Appleboy's SSH Action
+      #   with:
+      #     host: ${{ secrets.HOST }}  # Server's IP address or hostname
+      #     username: ${{ secrets.USERNAME }}  # SSH username (e.g., ubuntu for AWS EC2)
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}  # The private SSH key secret
+      #     port: 22  # SSH port (default is 22)
+      #     script: |
+      #           ls
+      #           cd Frontend
+      #           ls
+      #           git pull
+      #           npm i
+      #           npm run build 
+      #           pm2 restart 0
             # Commands to run on your remote server
             #cd /path/to/your/project  # Navigate to your project directory
             #git pull origin main  # Pull the latest changes from GitHub
