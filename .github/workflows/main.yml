@@ -7,12 +7,9 @@ on:
 
 jobs:
   deploy:
-    runs-on:  self-hosted  # Run the job on an Ubuntu runner
+    runs-on: self-hosted  # Use your self-hosted runner (instead of ubuntu-latest)
 
-    #steps:
-      # - name: Checkout the code
-      #   uses: actions/checkout@v2  # Checkout your repository's code
-      steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2  # Checkout your repository's code
 
@@ -24,6 +21,11 @@ jobs:
 
       - name: Restart with PM2
         run: pm2 restart 0  # Restart your app with PM2 (adjust if needed)
+
+
+   
+
+      
         
 
       # - name: Set up SSH private key
