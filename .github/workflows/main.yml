@@ -1,13 +1,13 @@
-name: Deploy to Server via SSH
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - master  # Trigger this workflow on push to the main branch
+      - master  # Trigger this workflow on push to the master branch
 
 jobs:
   deploy:
-    runs-on: self-hosted  # Use your self-hosted runner (instead of ubuntu-latest)
+    runs-on: self-hosted  # This will use your self-hosted runner
 
     steps:
       - name: Checkout code
@@ -19,8 +19,51 @@ jobs:
       - name: Build project
         run: npm run build  # Build the project
 
-      - name: Restart with PM2
-        run: pm2 restart 0  # Restart your app with PM2 (adjust if needed)
+      - name: Deploy and Restart Agent Service
+        run: |
+          echo "Deployment started..."
+          # Pull the latest changes and build the project
+          git pull origin master
+          npm install
+          npm run build
+          # Restart the agent service
+          sudo systemctl restart agent.service
+          echo "Agent service restarted!"
+
+
+
+
+
+
+
+
+
+
+
+
+# name: Deploy to Server via SSH
+
+# on:
+#   push:
+#     branches:
+#       - master  # Trigger this workflow on push to the main branch
+
+# jobs:
+#   deploy:
+#     runs-on: self-hosted  # Use your self-hosted runner (instead of ubuntu-latest)
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2  # Checkout your repository's code
+
+#       - name: Install dependencies
+#         run: npm install  # Install Node.js dependencies
+
+#       - name: Build project
+#         run: npm run build  # Build the project
+
+#       - name: Restart with PM2
+#         run: pm2 restart 0  # Restart your app with PM2 (adjust if needed)
 
 
    
